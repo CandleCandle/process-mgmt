@@ -2,6 +2,13 @@ import { check } from './structures_base.js';
 import { Stack } from './stack.js';
 
 class Process {
+    id;
+    inputs;
+    outputs;
+    duration;
+    factory_group;
+    clone_fields;
+
     constructor(id, inputs, outputs, duration, factory_group) {
         check(
             'id',
@@ -72,6 +79,11 @@ class Process {
 }
 
 class ProcessChain {
+    processes;
+    processes_by_output;
+    processes_by_input;
+    settings;
+
     constructor(processes) {
         check('processes', processes);
         this.processes = processes;
@@ -154,10 +166,10 @@ class ProcessChain {
      * @param {*} ignored
      * @returns
      */
-    filter_for_output(output_stack, priorities, ignored = []) {
-        let result = [];
-        let visited = [];
-        let visited_processes = [];
+    filter_for_output(output_stack, priorities, ignored: any[] = []) {
+        let result: any[] = [];
+        let visited: any[] = [];
+        let visited_processes: any[] = [];
         let queue = [output_stack.item.id];
         while (queue.length > 0) {
             let current = queue.shift();
@@ -199,7 +211,7 @@ class ProcessChain {
         );
     }
 
-    all_items() {
+    all_items(): any[] {
         return [
             ...new Set(
                 this.processes.flatMap((cur) => {
@@ -300,7 +312,7 @@ class ProcessChain {
     }
 
     to_graphviz() {
-        let result = [];
+        let result: any[] = [];
         result.push('digraph {');
         Object.entries(
             this.all_items().reduce((acc, cur) => {
@@ -314,7 +326,7 @@ class ProcessChain {
                 acc[g].push(cur);
                 return acc;
             }, {}),
-        ).forEach((g) => {
+        ).forEach((g: [string, any]) => {
             let id = g[0];
             let contents = g[1];
             if (id === '__default__') {

@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import * as assert from 'assert';
 
 import { Item } from '../src/item.ts';
-import { Stack, StackSet } from '../src/stack.js';
+import { Stack, StackSet } from '../src/stack.ts';
 
 let item_a = new Item('a', 'A');
 let item_b = new Item('b', 'B');
