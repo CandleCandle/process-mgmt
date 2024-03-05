@@ -1,11 +1,11 @@
 import { describe, it } from 'mocha';
 import * as assert from 'assert';
-import { Factory, FactoryGroup } from '../src/factory.ts';
-import { Process } from '../src/process.ts';
-import { RateProcess } from '../src/rate_process.ts';
+import { Factory, FactoryGroup } from '../src/factory.js';
+import { Process } from '../src/process.js';
+import { RateProcess } from '../src/rate_process.js';
 
-import { Item } from '../src/item.ts';
-import { Stack } from '../src/stack.ts';
+import { Item } from '../src/item.js';
+import { Stack } from '../src/stack.js';
 
 let item_a = new Item('a', 'A');
 let item_b = new Item('b', 'B');
