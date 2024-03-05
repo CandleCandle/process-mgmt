@@ -30,17 +30,17 @@ class FilterForOutput extends ProcessChainVisitor {
     }
 
     init(chain) {
-        let result: any[] = [];
-        let visited_item_ids: any[] = [];
-        let visited_processes: any[] = [];
-        let queue = [this.output_item.id];
+        const result: any[] = [];
+        const visited_item_ids: any[] = [];
+        const visited_processes: any[] = [];
+        const queue = [this.output_item.id];
         while (queue.length > 0) {
-            let current = queue.shift();
+            const current = queue.shift();
             visited_item_ids.push(current);
             if (this.ignored.includes(current)) {
                 continue;
             }
-            let process = select_process(chain, current, this.priority_cb);
+            const process = select_process(chain, current, this.priority_cb);
 
             if (process && !visited_processes.includes(process.id)) {
                 result.push(process);

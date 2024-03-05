@@ -73,7 +73,7 @@ class LinearAlgebra extends ProcessChainVisitor {
     }
 
     visit_process(process, _chain) {
-        let c = new Column(process);
+        const c = new Column(process);
         this.columns.push(c);
         c.items().forEach((i) => {
             if (!this.items.includes(i)) {
@@ -104,7 +104,7 @@ class LinearAlgebra extends ProcessChainVisitor {
                 col.entries
                     .items()
                     .flatMap((ssi) => {
-                        let total = col.entries.total(ssi);
+                        const total = col.entries.total(ssi);
                         return [total.item.name, total.quantity];
                     })
                     .join(', '),
@@ -116,12 +116,12 @@ class LinearAlgebra extends ProcessChainVisitor {
         if (!this.print_matricies) return;
         console.log(identifier);
         console.log('columns', matrix.numColumns(), 'rows', matrix.numRows());
-        if (!!!this.items) {
+        if (!this.items) {
             console.table(matrix.data);
             return;
         }
-        let res = {};
-        let lookup: any[] = [];
+        const res = {};
+        const lookup: any[] = [];
         for (let i = 0; i < this.items.length; ++i) {
             res[this.items[i].id] = {};
             lookup[i] = this.items[i].id;
@@ -170,7 +170,7 @@ class LinearAlgebra extends ProcessChainVisitor {
     }
 
     _build_initial_matrix() {
-        let rows = this.items.map((item) => {
+        const rows = this.items.map((item) => {
             return this.columns.map((col) => {
                 return col.count_for(item);
             });
@@ -179,11 +179,11 @@ class LinearAlgebra extends ProcessChainVisitor {
     }
 
     _build_requirements() {
-        let this_reqs_map = this.requirements.reduce((prev, cur) => {
+        const this_reqs_map = this.requirements.reduce((prev, cur) => {
             prev[cur.item.id] = cur.quantity;
             return prev;
         }, {});
-        let req = this.items.map((v, i) => {
+        const req = this.items.map((v, i) => {
             if (this_reqs_map[v.id]) {
                 return [this_reqs_map[v.id]];
             }
@@ -245,7 +245,7 @@ class LinearAlgebra extends ProcessChainVisitor {
     }
 
     _calculate_process_counts() {
-        let req_column = this.reduced_matrix
+        const req_column = this.reduced_matrix
             .getColumn(this.reduced_matrix.numColumns() - 1)
             .transpose().data[0];
         return this.columns
@@ -277,8 +277,8 @@ class LinearAlgebra extends ProcessChainVisitor {
             }
             if (i !== r) {
                 // swap rows i and r.
-                let ri = m1.getRow(i).data[0];
-                let rr = m1.getRow(r).data[0];
+                const ri = m1.getRow(i).data[0];
+                const rr = m1.getRow(r).data[0];
                 m1 = this.replace_row(m1, rr, i);
                 m1 = this.replace_row(m1, ri, r);
             }
@@ -289,8 +289,8 @@ class LinearAlgebra extends ProcessChainVisitor {
             );
             for (let ii = 0; ii < m1.numRows(); ++ii) {
                 if (ii !== r) {
-                    let sub = m1.getRow(r).scale(m1.get(ii, lead));
-                    let replacement = m1.getRow(ii).subtract(sub).data[0];
+                    const sub = m1.getRow(r).scale(m1.get(ii, lead));
+                    const replacement = m1.getRow(ii).subtract(sub).data[0];
                     m1 = this.replace_row(m1, replacement, ii);
                 }
             }
@@ -300,7 +300,7 @@ class LinearAlgebra extends ProcessChainVisitor {
     }
 
     replace_row(m, row, idx) {
-        let m1 = m.scale(1);
+        const m1 = m.scale(1);
         let c = 0;
         while (c < row.length) {
             // fix floating point things here?

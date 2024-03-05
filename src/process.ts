@@ -37,7 +37,13 @@ class Process {
         duration = this.duration,
         factory_group = this.factory_group,
     ) {
-        let result = new Process(id, inputs, outputs, duration, factory_group);
+        const result = new Process(
+            id,
+            inputs,
+            outputs,
+            duration,
+            factory_group,
+        );
         this.clone_fields.forEach((f) => (result[f] = this[f]));
         return result;
     }
@@ -51,7 +57,7 @@ class Process {
     }
 
     process_count_for_rate(input_stack) {
-        let output_stack = this.outputs.find(
+        const output_stack = this.outputs.find(
             (o) => o.item.id === input_stack.item.id,
         );
         return (this.duration * input_stack.quantity) / output_stack.quantity;
@@ -170,17 +176,17 @@ class ProcessChain {
      * @returns
      */
     filter_for_output(output_stack, priorities, ignored: any[] = []) {
-        let result: any[] = [];
-        let visited: any[] = [];
-        let visited_processes: any[] = [];
-        let queue = [output_stack.item.id];
+        const result: any[] = [];
+        const visited: any[] = [];
+        const visited_processes: any[] = [];
+        const queue = [output_stack.item.id];
         while (queue.length > 0) {
-            let current = queue.shift();
+            const current = queue.shift();
             visited.push(current);
             if (ignored.includes(current)) {
                 continue;
             }
-            let process = this._select_process(current, priorities);
+            const process = this._select_process(current, priorities);
 
             if (process && !visited_processes.includes(process.id)) {
                 result.push(process);
@@ -195,7 +201,7 @@ class ProcessChain {
     }
 
     _select_process(item_id, callback) {
-        let processes_for_current = this.processes_by_output[item_id];
+        const processes_for_current = this.processes_by_output[item_id];
         if (processes_for_current && processes_for_current.length > 1) {
             if (!callback) {
                 throw new Error('No priority selector enabled');
@@ -227,12 +233,12 @@ class ProcessChain {
     }
 
     _render_processor_node(node_id, process) {
-        let inputs = process.inputs
+        const inputs = process.inputs
             .map((input, index) => {
                 return '<i' + index + '> ' + input.item.name;
             })
             .join(' | ');
-        let outputs = process.outputs
+        const outputs = process.outputs
             .map((output, index) => {
                 return '<o' + index + '> ' + output.item.name;
             })
@@ -290,7 +296,7 @@ class ProcessChain {
     }
 
     accept(visitor) {
-        let options = visitor.check(this);
+        const options = visitor.check(this);
         if (options.init) visitor.init(this);
         if (options.visit_item)
             this.all_items().forEach((e) => visitor.visit_item(e, this));
@@ -315,7 +321,7 @@ class ProcessChain {
     }
 
     to_graphviz() {
-        let result: any[] = [];
+        const result: any[] = [];
         result.push('digraph {');
         Object.entries(
             this.all_items().reduce((acc, cur) => {
@@ -330,8 +336,8 @@ class ProcessChain {
                 return acc;
             }, {}),
         ).forEach((g: [string, any]) => {
-            let id = g[0];
-            let contents = g[1];
+            const id = g[0];
+            const contents = g[1];
             if (id === '__default__') {
                 contents.forEach((item) =>
                     result.push('  ' + this._render_item_node(item)),
@@ -347,7 +353,7 @@ class ProcessChain {
         });
 
         this.processes.forEach((process, index) => {
-            let node_id = 'process_' + index;
+            const node_id = 'process_' + index;
 
             result.push('  ' + this._render_processor_node(node_id, process));
 
