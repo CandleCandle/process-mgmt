@@ -1,4 +1,4 @@
-import { data_from_standard_json } from '../data_basic.ts';
+import { data_from_standard_json } from '../data_basic.js';
 
 let data_p = data_from_standard_json(
     'planbterraform',

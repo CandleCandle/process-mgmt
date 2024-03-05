@@ -1,8 +1,8 @@
-import { Factory, FactoryGroup } from '../factory.ts';
-import { Stack } from '../stack.ts';
-import { Item } from '../item.ts';
-import { Data } from '../data.ts';
-import { Process } from '../process.ts';
+import { Factory, FactoryGroup } from '../factory.js';
+import { Stack } from '../stack.js';
+import { Item } from '../item.js';
+import { Data } from '../data.js';
+import { Process } from '../process.js';
 
 const check_add = function (item, fn) {
     try {
@@ -13,7 +13,7 @@ const check_add = function (item, fn) {
     }
 };
 
-const add_item = function (data, name, i18n) {
+const add_item = function (data, name, i18n?) {
     if (!data.items[name]) {
         if (i18n) {
             data.add_item(new Item(name, i18n));
@@ -133,11 +133,11 @@ const _add_temperature_recipe = function (
     });
 };
 
-const compute_permutations = function (input, out) {
+const compute_permutations = function (input, out?) {
     if (input.length == 0) return out;
     let entry = input.shift();
     if (out) {
-        let r = [];
+        let r: any[] = [];
         out.forEach((o) => {
             entry.forEach((e) => {
                 r.push(o.concat(e));
@@ -174,7 +174,7 @@ const cross_product_ingredients = function (
     });
     let permutations = compute_permutations(
         ingredients_with_temperature_lists.map((ingredient_list) => {
-            let r = [];
+            let r: any[] = [];
             for (let i = 0; i < ingredient_list.length; ++i) r.push(i);
             return r;
         }),
@@ -187,7 +187,7 @@ const cross_product_ingredients = function (
 };
 
 const add_factory_groups = function (data, group) {
-    Object.values(group).forEach((factory) => {
+    Object.values(group).forEach((factory: any) => {
         check_add([factory, factory.crafting_categories], () => {
             Object.keys(factory.crafting_categories).forEach(
                 (category_name) => {
@@ -223,115 +223,112 @@ const _add_temperature_based_item = function (
     temperature_based_items[product.name][product.temperature] = item;
 };
 
-async function create_data(game, version) {
-    let data_p = import('./recipe-lister/recipe.json', {
-        assert: { type: 'json' },
-    })
-        .catch((e) => {
-            console.log('failed to read recipe.json:', e);
-        })
-        .then((m) => m.default)
-        .then((recipe_raw) => {
-            let data = new Data(game, version);
+// const _import_file = function(name) {
+//     return import('./recipe-lister/' + name, {assert: { type: 'json'}})
+//         .catch(e => {
+//         console.log('failed to read recipe.json:', e);
+//     })
+//     .then(m => m.default)
+// };
 
-            let temperature_based_items = {}; // [base name][temperature] => Item
+async function create_data(game, version, json_promise_cb) {
+    // if (!!!json_promise_cb) json_promise_cb = _import_file;
+    let data_p = json_promise_cb('recipe.json').then((recipe_raw) => {
+        let data = new Data(game, version);
 
-            // enumerate all possible temperatures for fluids.
-            // create temperature based items for each.
+        let temperature_based_items = {}; // [base name][temperature] => Item
 
-            Object.values(recipe_raw).forEach((recipe) => {
+        // enumerate all possible temperatures for fluids.
+        // create temperature based items for each.
+
+        Object.values(recipe_raw).forEach((recipe: any) => {
+            if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
+            if (!Array.isArray(recipe.products)) recipe.products = [];
+            recipe.products.forEach((product) => {
+                if (product.temperature) {
+                    let temp = product.temperature;
+                    let item = check_add([recipe, product], () =>
+                        add_item(
+                            data,
+                            product.name + '_' + temp,
+                            product.name + ' (' + temp + ')',
+                        ),
+                    );
+                    _add_temperature_based_item(
+                        temperature_based_items,
+                        product,
+                        item,
+                    );
+                } else {
+                    check_add([recipe, product], () =>
+                        add_item(data, product.name),
+                    );
+                }
+            });
+        });
+
+        // if a process has one of the temperature fluids as an input then create multiple variants
+
+        Object.values(recipe_raw).forEach((recipe: any) => {
+            check_add(recipe, () => {
                 if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
                 if (!Array.isArray(recipe.products)) recipe.products = [];
-                recipe.products.forEach((product) => {
-                    if (product.temperature) {
-                        let temp = product.temperature;
-                        let item = check_add([recipe, product], () =>
+                recipe.ingredients.forEach((i) => {
+                    if (i.temperature) {
+                        i.minimum_temperature = i.temperature;
+                        i.maximum_temperature = i.temperature;
+                    }
+                    if (i.minimum_temperature > -1e207) {
+                        let temp = i.minimum_temperature;
+                        let item = check_add([recipe, i], () =>
                             add_item(
                                 data,
-                                product.name + '_' + temp,
-                                product.name + ' (' + temp + ')',
+                                i.name + '_' + temp,
+                                i.name + ' (' + temp + ')',
                             ),
                         );
                         _add_temperature_based_item(
                             temperature_based_items,
-                            product,
+                            i,
                             item,
                         );
-                    } else {
-                        check_add([recipe, product], () =>
-                            add_item(data, product.name),
-                        );
                     }
-                });
-            });
-
-            // if a process has one of the temperature fluids as an input then create multiple variants
-
-            Object.values(recipe_raw).forEach((recipe) => {
-                check_add(recipe, () => {
-                    if (!Array.isArray(recipe.ingredients))
-                        recipe.ingredients = [];
-                    if (!Array.isArray(recipe.products)) recipe.products = [];
-                    recipe.ingredients.forEach((i) => {
-                        if (i.temperature) {
-                            i.minimum_temperature = i.temperature;
-                            i.maximum_temperature = i.temperature;
-                        }
-                        if (i.minimum_temperature > -1e207) {
-                            let temp = i.minimum_temperature;
-                            let item = check_add([recipe, i], () =>
-                                add_item(
-                                    data,
-                                    i.name + '_' + temp,
-                                    i.name + ' (' + temp + ')',
-                                ),
-                            );
-                            _add_temperature_based_item(
-                                temperature_based_items,
-                                i,
-                                item,
-                            );
-                        }
-                        if (i.maximum_temperature < 1e207) {
-                            let temp = i.maximum_temperature;
-                            let item = check_add([recipe, i], () =>
-                                add_item(
-                                    data,
-                                    i.name + '_' + temp,
-                                    i.name + ' (' + temp + ')',
-                                ),
-                            );
-                            _add_temperature_based_item(
-                                temperature_based_items,
-                                i,
-                                item,
-                            );
-                        }
-                    });
-
-                    if (_recipe_has_fluid_temperature(recipe)) {
-                        _add_temperature_recipe(
-                            data,
-                            recipe,
+                    if (i.maximum_temperature < 1e207) {
+                        let temp = i.maximum_temperature;
+                        let item = check_add([recipe, i], () =>
+                            add_item(
+                                data,
+                                i.name + '_' + temp,
+                                i.name + ' (' + temp + ')',
+                            ),
+                        );
+                        _add_temperature_based_item(
                             temperature_based_items,
+                            i,
+                            item,
                         );
-                    } else {
-                        _add_basic_recipe(data, recipe);
                     }
                 });
+
+                if (_recipe_has_fluid_temperature(recipe)) {
+                    _add_temperature_recipe(
+                        data,
+                        recipe,
+                        temperature_based_items,
+                    );
+                } else {
+                    _add_basic_recipe(data, recipe);
+                }
             });
-            return data;
         });
+        return data;
+    });
 
     let groups_p = [
         'assembling-machine.json',
         'furnace.json',
         'rocket-silo.json',
-    ].map((f) =>
-        import('./recipe-lister/' + f, { assert: { type: 'json' } })
-            .then((m) => m.default)
-            .catch((e) => console.error('failed to read .json:', f, e)),
-    );
+    ].map(json_promise_cb);
     return Promise.all([data_p, ...groups_p]).then((arr) => {
         let data = arr.shift();
         arr.forEach((g) => {

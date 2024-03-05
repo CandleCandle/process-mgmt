@@ -1,8 +1,8 @@
-import { Factory, FactoryGroup } from '../factory.ts';
-import { Stack } from '../stack.ts';
-import { Item } from '../item.ts';
-import { Data } from '../data.ts';
-import { Process } from '../process.ts';
+import { Factory, FactoryGroup } from '../factory.js';
+import { Stack } from '../stack.js';
+import { Item } from '../item.js';
+import { Data } from '../data.js';
+import { Process } from '../process.js';
 
 let raw = require('./exported-data.json');
 
@@ -31,6 +31,7 @@ const convert_ingredient = function (ingredient, recipe) {
     }
     return check_add(
         recipe,
+        // @ts-expect-error
         () => new Stack(data.items[ingredient_name], amount),
     );
 };
@@ -91,7 +92,7 @@ let data_p = import('./exported-data.json', { assert: { type: 'json' } })
             );
         });
 
-        raw.craftingMachines.forEach((machine) => {
+        raw.craftingMachines.forEach((machine: any) => {
             if (!machine.name) return; // ignore '{}'
             check_add(machine, function () {
                 Object.keys(machine.categories).forEach((cat) => {
