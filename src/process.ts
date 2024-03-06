@@ -60,7 +60,7 @@ class Process {
             duration,
             factory_group,
         );
-        this.clone_fields.forEach((f) => ((result[f] as any) = this[f]));
+        for (const f of this.clone_fields) (result[f] as any) = this[f];
         return result;
     }
 
@@ -165,12 +165,12 @@ class ProcessChain {
     _build_processes_by_output() {
         return this.processes.reduce(
             (acc, cur) => {
-                cur.outputs.forEach((output) => {
+                for (const output of cur.outputs) {
                     if (!acc[output.item.id]) {
                         acc[output.item.id] = [];
                     }
                     acc[output.item.id].push(cur);
-                });
+                }
                 return acc;
             },
             {} as Record<ItemId, Process[]>,
@@ -180,12 +180,12 @@ class ProcessChain {
     _build_processes_by_input() {
         return this.processes.reduce(
             (acc, cur) => {
-                cur.inputs.forEach((input) => {
+                for (const input of cur.inputs) {
                     if (!acc[input.item.id]) {
                         acc[input.item.id] = [];
                     }
                     acc[input.item.id].push(cur);
-                });
+                }
                 return acc;
             },
             {} as Record<ItemId, Process[]>,
@@ -219,10 +219,10 @@ class ProcessChain {
             if (process && !visited_processes.includes(process.id)) {
                 result.push(process);
                 visited_processes.push(process.id);
-                process.inputs
+                for (const input of process.inputs
                     .filter((input) => !queue.includes(input.item.id))
-                    .filter((input) => !visited.includes(input.item.id))
-                    .forEach((input) => queue.push(input.item.id));
+                    .filter((input) => !visited.includes(input.item.id)))
+                    queue.push(input.item.id);
             }
         }
         return new ProcessChain(result);
@@ -336,23 +336,21 @@ class ProcessChain {
         const options = visitor.check(this);
         if (options.init) visitor.init(this);
         if (options.visit_item)
-            this.all_items().forEach((e) => visitor.visit_item(e, this));
+            for (const e of this.all_items()) visitor.visit_item(e, this);
         if (
             options.visit_process ||
             options.visit_item_process_edge ||
             options.visit_process_item_edge
         ) {
-            this.processes.forEach((p) => {
+            for (const p of this.processes) {
                 if (options.visit_process) visitor.visit_process(p, this);
                 if (options.visit_item_process_edge)
-                    p.inputs.forEach((i, ix) =>
-                        visitor.visit_item_process_edge(i, p, this, ix),
-                    );
+                    for (const [ix, i] of p.inputs.entries())
+                        visitor.visit_item_process_edge(i, p, this, ix);
                 if (options.visit_process_item_edge)
-                    p.outputs.forEach((o, ox) =>
-                        visitor.visit_process_item_edge(p, o, this, ox),
-                    );
-            });
+                    for (const [ox, o] of p.outputs.entries())
+                        visitor.visit_process_item_edge(p, o, this, ox);
+            }
         }
         return visitor.build();
     }
@@ -360,7 +358,7 @@ class ProcessChain {
     to_graphviz() {
         const result: any[] = [];
         result.push('digraph {');
-        Object.entries(
+        for (const g of Object.entries(
             this.all_items().reduce(
                 (acc, cur) => {
                     let g = cur.group;
@@ -375,24 +373,22 @@ class ProcessChain {
                 },
                 {} as Record<string, Item[]>,
             ),
-        ).forEach((g) => {
+        )) {
             const id = g[0];
             const contents = g[1];
             if (id === '__default__') {
-                contents.forEach((item) =>
-                    result.push('  ' + this._render_item_node(item)),
-                );
+                for (const item of contents)
+                    result.push('  ' + this._render_item_node(item));
             } else {
                 if (this.settings.generate_item_groupings)
                     result.push('  subgraph cluster_' + id + ' {');
-                contents.forEach((item) =>
-                    result.push('    ' + this._render_item_node(item)),
-                );
+                for (const item of contents)
+                    result.push('    ' + this._render_item_node(item));
                 if (this.settings.generate_item_groupings) result.push('  }');
             }
-        });
+        }
 
-        this.processes.forEach((process, index) => {
+        for (const [index, process] of this.processes.entries()) {
             const node_id = 'process_' + index;
 
             result.push('  ' + this._render_processor_node(node_id, process));
@@ -412,7 +408,7 @@ class ProcessChain {
                     );
                 }),
             );
-        });
+        }
         result.push('}');
         return result.join('\n');
     }

@@ -281,11 +281,11 @@ const ff = function (input, out?) {
     const entry = input.shift();
     if (out) {
         const r: any[] = [];
-        out.forEach((o) => {
-            entry.forEach((e) => {
+        for (const o of out) {
+            for (const e of entry) {
                 r.push(o.concat(e));
-            });
-        });
+            }
+        }
         return ff(input, r);
     } else {
         return ff(

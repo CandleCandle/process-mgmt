@@ -26,7 +26,7 @@ const setup_data = function () {
 };
 
 const add_items_to_data = function (data, items) {
-    items.forEach((e) => data.add_item(new Item(e, e)));
+    for (const e of items) data.add_item(new Item(e, e));
 };
 
 /**

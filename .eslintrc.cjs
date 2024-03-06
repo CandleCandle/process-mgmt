@@ -26,6 +26,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
+        "unicorn",
         "@typescript-eslint"
     ],
     "rules": {
@@ -33,5 +34,6 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": "warn",
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-non-null-assertion": "warn",
+        "unicorn/no-array-for-each": "warn",
     }
 }

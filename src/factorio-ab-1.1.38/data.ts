@@ -78,22 +78,22 @@ const data_p = import('./exported-data.json', { assert: { type: 'json' } })
 
             check_add(recipe, function () {
                 const name = fix_identifier(recipe.name);
-                recipe.ingredients.forEach((ing) => {
+                for (const ing of recipe.ingredients) {
                     const ing_name = fix_identifier(ing.name);
                     if (!data.items[ing_name]) {
                         data.add_item(new Item(ing_name, ing_name));
                     }
-                });
+                }
             });
             check_add(recipe, () => {
-                recipe.results.forEach((ing) => {
+                for (const ing of recipe.results) {
                     const ing_name = fix_identifier(ing.name);
                     if (!data.items[ing_name]) {
                         check_add(recipe, () =>
                             data.add_item(new Item(ing_name, ing_name)),
                         );
                     }
-                });
+                }
             });
             const inputs = recipe.ingredients.map((ing) =>
                 convert_ingredient(data, ing, recipe),
@@ -137,14 +137,14 @@ const data_p = import('./exported-data.json', { assert: { type: 'json' } })
             .forEach((machine: any) => {
                 if (!machine.name) return; // ignore '{}'
                 check_add(machine, function () {
-                    machine.crafting_categories.forEach((cat) => {
+                    for (const cat of machine.crafting_categories) {
                         const category_name = fix_identifier(cat);
                         if (!data.factory_groups[category_name]) {
                             data.add_factory_group(
                                 new FactoryGroup(category_name),
                             );
                         }
-                    });
+                    }
                     const machine_name = fix_identifier(machine.name);
                     data.add_factory(
                         new Factory(
