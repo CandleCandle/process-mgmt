@@ -33,7 +33,7 @@ const add_items_to_data = function (data, items) {
  * processes: object with entries like 'C': {"in": ['a', 'b'], "out": ['c']}
  */
 const add_processes_to_data = function (data, processes) {
-    for (const e of Object.entries(processes)) {
+    for (const e of Object.entries(processes) as [string, any][]) {
         data.add_process(
             new Process(
                 e[0], // id

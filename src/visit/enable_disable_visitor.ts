@@ -1,7 +1,16 @@
 import { ProcessChain } from '../process.js';
-import { ProcessChainVisitor } from './process_chain_visitor.js';
+import {
+    ProcessChainVisitor,
+    VisitorOptions,
+} from './process_chain_visitor.js';
 
 class EnableDisable extends ProcessChainVisitor {
+    data;
+    enable;
+    disable;
+
+    chain;
+
     constructor(data, enable, disable) {
         super();
         this.data = data;
@@ -9,7 +18,7 @@ class EnableDisable extends ProcessChainVisitor {
         this.disable = disable;
     }
 
-    check(_chain) {
+    check(_chain): VisitorOptions {
         return {
             init: true,
         };

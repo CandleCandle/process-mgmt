@@ -1,7 +1,13 @@
 import { check } from './structures_base.js';
 
+export type ItemId = string;
+
 class Item {
-    constructor(id, name, group) {
+    id: string;
+    name: string;
+    group?: string;
+
+    constructor(id: string, name: string, group?: string) {
         check('id', id, 'name', name);
         this.id = id;
         this.name = name;

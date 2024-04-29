@@ -13,7 +13,7 @@ const check_add = function (item, fn) {
     }
 };
 
-const add_item = function (data, name, i18n) {
+const add_item = function (data, name, i18n?) {
     if (!data.items[name]) {
         if (i18n) {
             data.add_item(new Item(name, i18n));
@@ -90,85 +90,6 @@ const _add_basic_recipe = function (data, recipe) {
     });
 };
 
-const _hack_add_reactor = function (data) {
-    // reactor has C constant consumption (MW)
-    // fuel cell has E energy (GJ)
-    // e.g. breeder has 5MW consumption; breeder cell has 5GJ
-    // therefore 5,000MJ / 5M(J/S) = 1000s to convert 1 breeder-fuel-cell into a used-up-breeder-fuel-cell
-
-    // reactor[id].max_energy_usage = C
-    // item[id].fuel_value = E
-    // reactor[id].energy_source.burner.fuel_categories (set) tells us what types of fuel can be used
-    // item[id].fuel_category tells us the category for that particular fuel.
-
-    // uranium 40MW, 8GJ ==> 200s
-    // breeder 5MW, 5GJ ==> 1000s
-    // MOX 20MW, 20GJ ==> 1000s
-
-    data.add_factory_group(new FactoryGroup('basic-reactor'));
-    data.add_factory_group(new FactoryGroup('breeder-reactor'));
-    data.add_factory_group(new FactoryGroup('mox-reactor'));
-
-    check_add('uranium-fuel-cell', () => {
-        data.add_process(
-            new Process(
-                'burn-uranium-fuel-cell',
-                [new Stack(data.items['uranium-fuel-cell'], 1)],
-                [new Stack(data.items['used-up-uranium-fuel-cell'], 1)],
-                200,
-                data.factory_groups['basic-reactor'],
-            ),
-        );
-    });
-    check_add('breeder-fuel-cell', () => {
-        data.add_process(
-            new Process(
-                'burn-breeder-fuel-cell',
-                [new Stack(data.items['breeder-fuel-cell'], 1)],
-                [new Stack(data.items['used-up-breeder-fuel-cell'], 1)],
-                1000,
-                data.factory_groups['breeder-reactor'],
-            ),
-        );
-    });
-    check_add('MOX-fuel', () => {
-        data.add_process(
-            new Process(
-                'burn-MOX-fuel',
-                [new Stack(data.items['MOX-fuel'], 1)],
-                [new Stack(data.items['used-up-MOX-fuel'], 1)],
-                1000,
-                data.factory_groups['mox-reactor'],
-            ),
-        );
-    });
-
-    data.add_factory(
-        new Factory(
-            'basic-reactor',
-            'basic-reactor',
-            [data.factory_groups['basic-reactor']],
-            1,
-        ),
-    );
-    data.add_factory(
-        new Factory(
-            'breeder-reactor',
-            'breeder-reactor',
-            [data.factory_groups['breeder-reactor']],
-            1,
-        ),
-    );
-    data.add_factory(
-        new Factory(
-            'mox-reactor',
-            'mox-reactor',
-            [data.factory_groups['mox-reactor']],
-            1,
-        ),
-    );
-};
-
 const _add_temperature_recipe = function (
     data,
     recipe,
@@ -212,11 +133,11 @@ const _add_temperature_recipe = function (
     });
 };
 
-const compute_permutations = function (input, out) {
+const compute_permutations = function (input, out?) {
     if (input.length == 0) return out;
     const entry = input.shift();
     if (out) {
-        const r = [];
+        const r: any[] = [];
         for (const o of out) {
             for (const e of entry) {
                 r.push(o.concat(e));
@@ -253,7 +174,7 @@ const cross_product_ingredients = function (
     });
     const permutations = compute_permutations(
         ingredients_with_temperature_lists.map((ingredient_list) => {
-            const r = [];
+            const r: any[] = [];
             for (let i = 0; i < ingredient_list.length; ++i) r.push(i);
             return r;
         }),
@@ -266,7 +187,7 @@ const cross_product_ingredients = function (
 };
 
 const add_factory_groups = function (data, group) {
-    for (const factory of Object.values(group)) {
+    for (const factory of Object.values(group) as any[]) {
         check_add([factory, factory.crafting_categories], () => {
             for (const category_name of Object.keys(
                 factory.crafting_categories,
@@ -309,7 +230,7 @@ async function create_data(game, version) {
         .catch((e) => {
             console.log('failed to read recipe.json:', e);
         })
-        .then((m) => m.default)
+        .then((m: any) => m.default)
         .then((recipe_raw) => {
             const data = new Data(game, version);
 
@@ -318,7 +239,7 @@ async function create_data(game, version) {
             // enumerate all possible temperatures for fluids.
             // create temperature based items for each.
 
-            for (const recipe of Object.values(recipe_raw)) {
+            for (const recipe of Object.values(recipe_raw) as any[]) {
                 if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
                 if (!Array.isArray(recipe.products)) recipe.products = [];
                 for (const product of recipe.products) {
@@ -346,7 +267,7 @@ async function create_data(game, version) {
 
             // if a process has one of the temperature fluids as an input then create multiple variants
 
-            for (const recipe of Object.values(recipe_raw)) {
+            for (const recipe of Object.values(recipe_raw) as any[]) {
                 check_add(recipe, () => {
                     if (!Array.isArray(recipe.ingredients))
                         recipe.ingredients = [];
@@ -399,8 +320,6 @@ async function create_data(game, version) {
                     }
                 });
             }
-
-            _hack_add_reactor(data);
             return data;
         });
 
