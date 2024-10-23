@@ -1,0 +1,518 @@
+{
+  "foundry" : {
+    "name" : "foundry",
+    "localised_name" : [
+      "entity-name.foundry"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 2500000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 240,
+    "crafting_categories" : {
+      "metallurgy" : true,
+      "pressing" : true,
+      "crafting-with-fluid-or-metallurgy" : true,
+      "metallurgy-or-assembling" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 4,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 83333.333333333
+      }
+    }
+  },
+  "biochamber" : {
+    "name" : "biochamber",
+    "localised_name" : [
+      "entity-name.biochamber"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 500000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 120,
+    "crafting_categories" : {
+      "organic" : true,
+      "organic-or-hand-crafting" : true,
+      "organic-or-assembling" : true,
+      "organic-or-chemistry" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 4,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "burner" : {
+        "effectivity" : 1,
+        "fuel_categories" : {
+          "nutrients" : true
+        }
+      }
+    }
+  },
+  "captive-biter-spawner" : {
+    "name" : "captive-biter-spawner",
+    "localised_name" : [
+      "entity-name.captive-biter-spawner"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 100000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 60,
+    "crafting_categories" : {
+      "captive-spawner-process" : true,
+      "parameters" : true
+    },
+    "fixed_recipe" : "biter-egg",
+    "module_inventory_size" : 0,
+    "allowed_effects" : {
+      "consumption" : false,
+      "speed" : false,
+      "productivity" : false,
+      "pollution" : false,
+      "quality" : false
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "burner" : {
+        "effectivity" : 1,
+        "fuel_categories" : {
+          "food" : true
+        }
+      }
+    }
+  },
+  "assembling-machine-1" : {
+    "name" : "assembling-machine-1",
+    "localised_name" : [
+      "entity-name.assembling-machine-1"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 75000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 30,
+    "crafting_categories" : {
+      "crafting" : true,
+      "basic-crafting" : true,
+      "advanced-crafting" : true,
+      "electronics" : true,
+      "pressing" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 0,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : false,
+      "pollution" : true,
+      "quality" : false
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 2500
+      }
+    }
+  },
+  "assembling-machine-2" : {
+    "name" : "assembling-machine-2",
+    "localised_name" : [
+      "entity-name.assembling-machine-2"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 150000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 45,
+    "crafting_categories" : {
+      "basic-crafting" : true,
+      "crafting" : true,
+      "advanced-crafting" : true,
+      "crafting-with-fluid" : true,
+      "electronics" : true,
+      "electronics-with-fluid" : true,
+      "pressing" : true,
+      "metallurgy-or-assembling" : true,
+      "organic-or-hand-crafting" : true,
+      "organic-or-assembling" : true,
+      "electronics-or-assembling" : true,
+      "cryogenics-or-assembling" : true,
+      "crafting-with-fluid-or-metallurgy" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 2,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 5000
+      }
+    }
+  },
+  "assembling-machine-3" : {
+    "name" : "assembling-machine-3",
+    "localised_name" : [
+      "entity-name.assembling-machine-3"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 375000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 75,
+    "crafting_categories" : {
+      "basic-crafting" : true,
+      "crafting" : true,
+      "advanced-crafting" : true,
+      "crafting-with-fluid" : true,
+      "electronics" : true,
+      "electronics-with-fluid" : true,
+      "pressing" : true,
+      "metallurgy-or-assembling" : true,
+      "organic-or-hand-crafting" : true,
+      "organic-or-assembling" : true,
+      "electronics-or-assembling" : true,
+      "cryogenics-or-assembling" : true,
+      "crafting-with-fluid-or-metallurgy" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 4,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 12500
+      }
+    }
+  },
+  "oil-refinery" : {
+    "name" : "oil-refinery",
+    "localised_name" : [
+      "entity-name.oil-refinery"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 420000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 60,
+    "crafting_categories" : {
+      "oil-processing" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 3,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : false
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 14000
+      }
+    }
+  },
+  "chemical-plant" : {
+    "name" : "chemical-plant",
+    "localised_name" : [
+      "entity-name.chemical-plant"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 210000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 60,
+    "crafting_categories" : {
+      "chemistry" : true,
+      "chemistry-or-cryogenics" : true,
+      "organic-or-chemistry" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 3,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 7000
+      }
+    }
+  },
+  "centrifuge" : {
+    "name" : "centrifuge",
+    "localised_name" : [
+      "entity-name.centrifuge"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 350000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 60,
+    "crafting_categories" : {
+      "centrifuging" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 2,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 11666.666666667
+      }
+    }
+  },
+  "electromagnetic-plant" : {
+    "name" : "electromagnetic-plant",
+    "localised_name" : [
+      "entity-name.electromagnetic-plant"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 2000000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 120,
+    "crafting_categories" : {
+      "electromagnetics" : true,
+      "electronics" : true,
+      "electronics-with-fluid" : true,
+      "electronics-or-assembling" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 5,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 66666.666666667
+      }
+    }
+  },
+  "cryogenic-plant" : {
+    "name" : "cryogenic-plant",
+    "localised_name" : [
+      "entity-name.cryogenic-plant"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 1500000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 120,
+    "crafting_categories" : {
+      "cryogenics" : true,
+      "chemistry-or-cryogenics" : true,
+      "cryogenics-or-assembling" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 8,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 50000
+      }
+    }
+  },
+  "crusher" : {
+    "name" : "crusher",
+    "localised_name" : [
+      "entity-name.crusher"
+    ],
+    "type" : "assembling-machine",
+    "energy_usage" : 540000,
+    "ingredient_count" : 255,
+    "_crafting_speed" : 60,
+    "crafting_categories" : {
+      "crushing" : true,
+      "parameters" : true
+    },
+    "module_inventory_size" : 2,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 18000
+      }
+    }
+  }
+}

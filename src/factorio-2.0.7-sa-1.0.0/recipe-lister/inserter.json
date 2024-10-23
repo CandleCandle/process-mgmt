@@ -1,0 +1,161 @@
+{
+  "burner-inserter" : {
+    "name" : "burner-inserter",
+    "localised_name" : [
+      "entity-name.burner-inserter"
+    ],
+    "max_energy_usage" : 144000,
+    "inserter_extension_speed" : 2.1,
+    "inserter_rotation_speed" : 0.78,
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "burner" : {
+        "effectivity" : 1,
+        "fuel_categories" : {
+          "chemical" : true
+        }
+      }
+    }
+  },
+  "inserter" : {
+    "name" : "inserter",
+    "localised_name" : [
+      "entity-name.inserter"
+    ],
+    "max_energy_usage" : 14700,
+    "inserter_extension_speed" : 2.1,
+    "inserter_rotation_speed" : 0.84,
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 400
+      }
+    }
+  },
+  "long-handed-inserter" : {
+    "name" : "long-handed-inserter",
+    "localised_name" : [
+      "entity-name.long-handed-inserter"
+    ],
+    "max_energy_usage" : 21000,
+    "inserter_extension_speed" : 3,
+    "inserter_rotation_speed" : 1.2,
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 400
+      }
+    }
+  },
+  "fast-inserter" : {
+    "name" : "fast-inserter",
+    "localised_name" : [
+      "entity-name.fast-inserter"
+    ],
+    "max_energy_usage" : 58800,
+    "inserter_extension_speed" : 6,
+    "inserter_rotation_speed" : 2.4,
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 500
+      }
+    }
+  },
+  "bulk-inserter" : {
+    "name" : "bulk-inserter",
+    "localised_name" : [
+      "entity-name.bulk-inserter"
+    ],
+    "max_energy_usage" : 168000,
+    "inserter_extension_speed" : 6,
+    "inserter_rotation_speed" : 2.4,
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 1000
+      }
+    }
+  },
+  "stack-inserter" : {
+    "name" : "stack-inserter",
+    "localised_name" : [
+      "entity-name.stack-inserter"
+    ],
+    "max_energy_usage" : 336000,
+    "inserter_extension_speed" : 6,
+    "inserter_rotation_speed" : 2.4,
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 1000
+      }
+    }
+  }
+}

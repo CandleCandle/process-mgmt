@@ -1,0 +1,161 @@
+{
+  "stone-furnace" : {
+    "name" : "stone-furnace",
+    "localised_name" : [
+      "entity-name.stone-furnace"
+    ],
+    "type" : "furnace",
+    "energy_usage" : 90000,
+    "ingredient_count" : 1,
+    "_crafting_speed" : 60,
+    "crafting_categories" : {
+      "smelting" : true
+    },
+    "module_inventory_size" : 0,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : false,
+      "pollution" : true,
+      "quality" : false
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "burner" : {
+        "effectivity" : 1,
+        "fuel_categories" : {
+          "chemical" : true
+        }
+      }
+    }
+  },
+  "steel-furnace" : {
+    "name" : "steel-furnace",
+    "localised_name" : [
+      "entity-name.steel-furnace"
+    ],
+    "type" : "furnace",
+    "energy_usage" : 90000,
+    "ingredient_count" : 1,
+    "_crafting_speed" : 120,
+    "crafting_categories" : {
+      "smelting" : true
+    },
+    "module_inventory_size" : 0,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : false,
+      "pollution" : true,
+      "quality" : false
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "burner" : {
+        "effectivity" : 1,
+        "fuel_categories" : {
+          "chemical" : true
+        }
+      }
+    }
+  },
+  "electric-furnace" : {
+    "name" : "electric-furnace",
+    "localised_name" : [
+      "entity-name.electric-furnace"
+    ],
+    "type" : "furnace",
+    "energy_usage" : 180000,
+    "ingredient_count" : 1,
+    "_crafting_speed" : 120,
+    "crafting_categories" : {
+      "smelting" : true
+    },
+    "module_inventory_size" : 2,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : true,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 6000
+      }
+    }
+  },
+  "recycler" : {
+    "name" : "recycler",
+    "localised_name" : [
+      "entity-name.recycler"
+    ],
+    "type" : "furnace",
+    "energy_usage" : 180000,
+    "ingredient_count" : 1,
+    "_crafting_speed" : 30,
+    "crafting_categories" : {
+      "recycling" : true,
+      "recycling-or-hand-crafting" : true
+    },
+    "module_inventory_size" : 4,
+    "allowed_effects" : {
+      "consumption" : true,
+      "speed" : true,
+      "productivity" : false,
+      "pollution" : true,
+      "quality" : true
+    },
+    "friendly_map_color" : {
+      "r" : 0,
+      "g" : 96,
+      "b" : 145,
+      "a" : 255
+    },
+    "enemy_map_color" : {
+      "r" : 255,
+      "g" : 25,
+      "b" : 25,
+      "a" : 255
+    },
+    "energy_source" : {
+      "electric" : {
+        "drain" : 6000
+      }
+    }
+  }
+}
