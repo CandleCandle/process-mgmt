@@ -19,12 +19,10 @@ class RateVisitor extends ProcessChainVisitor {
     }
 
     visit_process(process, _chain) {
-        console.log("rate visitor: ", process);
         const factory_configured = this.factory_type_cb(process);
         const factory = factory_configured
             ? factory_configured
             : new Factory('__generated__', 'default', []);
-        console.log("factory: ", factory);
         const p = factory.update_process(process);
         const result = p.clone(
             p.id,
@@ -35,7 +33,6 @@ class RateVisitor extends ProcessChainVisitor {
         );
         result.factory_type = factory;
         result.clone_fields.push('factory_type');
-        console.log("rate visitor: ", result)
         this.converted.push(result);
     }
 
