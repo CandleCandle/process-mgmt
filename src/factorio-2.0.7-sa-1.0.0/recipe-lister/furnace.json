@@ -7,7 +7,7 @@
     "type" : "furnace",
     "energy_usage" : 90000,
     "ingredient_count" : 1,
-    "_crafting_speed" : 60,
+    "crafting_speed" : 60,
     "crafting_categories" : {
       "smelting" : true
     },
@@ -48,7 +48,7 @@
     "type" : "furnace",
     "energy_usage" : 90000,
     "ingredient_count" : 1,
-    "_crafting_speed" : 120,
+    "crafting_speed" : 120,
     "crafting_categories" : {
       "smelting" : true
     },
@@ -89,7 +89,7 @@
     "type" : "furnace",
     "energy_usage" : 180000,
     "ingredient_count" : 1,
-    "_crafting_speed" : 120,
+    "crafting_speed" : 120,
     "crafting_categories" : {
       "smelting" : true
     },
@@ -127,7 +127,7 @@
     "type" : "furnace",
     "energy_usage" : 180000,
     "ingredient_count" : 1,
-    "_crafting_speed" : 30,
+    "crafting_speed" : 30,
     "crafting_categories" : {
       "recycling" : true,
       "recycling-or-hand-crafting" : true

@@ -8,4 +8,4 @@ const _import_file = function (name) {
         .then((m) => m.default);
 };
 
-export default await create_data('factorio-2.0.7-sa', '1.0.0', _import_file);
+export default await create_data('factorio-2.0.7-sa-1.0.0', '1.0.0', _import_file);
