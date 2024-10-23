@@ -19,7 +19,7 @@
       "cryogenic-science-pack",
       "promethium-science-pack"
     ],
-    "researching_speed" : 60,
+    "researching_speed" : 1,
     "friendly_map_color" : {
       "r" : 0,
       "g" : 96,
@@ -58,7 +58,7 @@
       "cryogenic-science-pack",
       "promethium-science-pack"
     ],
-    "researching_speed" : 120,
+    "researching_speed" : 2,
     "friendly_map_color" : {
       "r" : 0,
       "g" : 96,

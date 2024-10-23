@@ -7,7 +7,7 @@
     "type" : "rocket-silo",
     "energy_usage" : 250000,
     "ingredient_count" : 255,
-    "crafting_speed" : 60,
+    "crafting_speed" : 1,
     "crafting_categories" : {
       "rocket-building" : true,
       "parameters" : true

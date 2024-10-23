@@ -4,7 +4,6 @@
     "localised_name" : [
       "entity-name.solar-panel"
     ],
-    "max_energy_production" : 60000,
     "friendly_map_color" : {
       "r" : 30,
       "g" : 33,

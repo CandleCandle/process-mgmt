@@ -4,7 +4,6 @@
     "localised_name" : [
       "entity-name.boiler"
     ],
-    "max_energy_usage" : 1800000,
     "target_temperature" : 165,
     "friendly_map_color" : {
       "r" : 0,
@@ -32,7 +31,6 @@
     "localised_name" : [
       "entity-name.heat-exchanger"
     ],
-    "max_energy_usage" : 10000000,
     "target_temperature" : 500,
     "friendly_map_color" : {
       "r" : 0,

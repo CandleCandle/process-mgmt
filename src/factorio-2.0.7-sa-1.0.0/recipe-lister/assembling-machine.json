@@ -7,7 +7,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 2500000,
     "ingredient_count" : 255,
-    "crafting_speed" : 240,
+    "crafting_speed" : 4,
     "crafting_categories" : {
       "metallurgy" : true,
       "pressing" : true,
@@ -49,7 +49,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 500000,
     "ingredient_count" : 255,
-    "crafting_speed" : 120,
+    "crafting_speed" : 2,
     "crafting_categories" : {
       "organic" : true,
       "organic-or-hand-crafting" : true,
@@ -94,7 +94,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 100000,
     "ingredient_count" : 255,
-    "crafting_speed" : 60,
+    "crafting_speed" : 1,
     "crafting_categories" : {
       "captive-spawner-process" : true,
       "parameters" : true
@@ -137,7 +137,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 75000,
     "ingredient_count" : 255,
-    "crafting_speed" : 30,
+    "crafting_speed" : 0.5,
     "crafting_categories" : {
       "crafting" : true,
       "basic-crafting" : true,
@@ -180,7 +180,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 150000,
     "ingredient_count" : 255,
-    "crafting_speed" : 45,
+    "crafting_speed" : 0.75,
     "crafting_categories" : {
       "basic-crafting" : true,
       "crafting" : true,
@@ -231,7 +231,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 375000,
     "ingredient_count" : 255,
-    "crafting_speed" : 75,
+    "crafting_speed" : 1.25,
     "crafting_categories" : {
       "basic-crafting" : true,
       "crafting" : true,
@@ -282,7 +282,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 420000,
     "ingredient_count" : 255,
-    "crafting_speed" : 60,
+    "crafting_speed" : 1,
     "crafting_categories" : {
       "oil-processing" : true,
       "parameters" : true
@@ -321,7 +321,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 210000,
     "ingredient_count" : 255,
-    "crafting_speed" : 60,
+    "crafting_speed" : 1,
     "crafting_categories" : {
       "chemistry" : true,
       "chemistry-or-cryogenics" : true,
@@ -362,7 +362,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 350000,
     "ingredient_count" : 255,
-    "crafting_speed" : 60,
+    "crafting_speed" : 1,
     "crafting_categories" : {
       "centrifuging" : true,
       "parameters" : true
@@ -401,7 +401,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 2000000,
     "ingredient_count" : 255,
-    "crafting_speed" : 120,
+    "crafting_speed" : 2,
     "crafting_categories" : {
       "electromagnetics" : true,
       "electronics" : true,
@@ -443,7 +443,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 1500000,
     "ingredient_count" : 255,
-    "crafting_speed" : 120,
+    "crafting_speed" : 2,
     "crafting_categories" : {
       "cryogenics" : true,
       "chemistry-or-cryogenics" : true,
@@ -484,7 +484,7 @@
     "type" : "assembling-machine",
     "energy_usage" : 540000,
     "ingredient_count" : 255,
-    "crafting_speed" : 60,
+    "crafting_speed" : 1,
     "crafting_categories" : {
       "crushing" : true,
       "parameters" : true

@@ -251,9 +251,9 @@
       "height" : 2
     },
     "energy_production" : 0,
-    "shield" : 3000,
+    "shield" : 50,
     "energy_per_shield" : 20000,
-    "energy_consumption" : 240000,
+    "energy_consumption" : 4000,
     "equipment_categories" : [
       "armor"
     ],
@@ -275,9 +275,9 @@
       "height" : 2
     },
     "energy_production" : 0,
-    "shield" : 9000,
+    "shield" : 150,
     "energy_per_shield" : 30000,
-    "energy_consumption" : 360000,
+    "energy_consumption" : 6000,
     "equipment_categories" : [
       "armor"
     ],
@@ -301,7 +301,7 @@
     "energy_production" : 0,
     "shield" : 0,
     "energy_per_shield" : 0,
-    "energy_consumption" : 200000,
+    "energy_consumption" : 3333.3333333333,
     "equipment_categories" : [
       "armor"
     ],
@@ -373,7 +373,7 @@
     "energy_production" : 0,
     "shield" : 0,
     "energy_per_shield" : 0,
-    "energy_consumption" : 10000,
+    "energy_consumption" : 166.66666666667,
     "equipment_categories" : [
       "armor"
     ],
@@ -532,7 +532,7 @@
     "energy_production" : 0,
     "shield" : 0,
     "energy_per_shield" : 0,
-    "energy_consumption" : 2000000,
+    "energy_consumption" : 33333.333333333,
     "equipment_categories" : [
       "armor"
     ],
@@ -556,7 +556,7 @@
     "energy_production" : 0,
     "shield" : 0,
     "energy_per_shield" : 0,
-    "energy_consumption" : 4000000,
+    "energy_consumption" : 66666.666666667,
     "equipment_categories" : [
       "armor"
     ],
@@ -628,7 +628,7 @@
     "energy_production" : 0,
     "shield" : 0,
     "energy_per_shield" : 0,
-    "energy_consumption" : 100000,
+    "energy_consumption" : 1666.6666666667,
     "equipment_categories" : [
       "armor"
     ],
