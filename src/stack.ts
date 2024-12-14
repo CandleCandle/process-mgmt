@@ -1,7 +1,11 @@
 import { check } from './structures_base.js';
+import { Item, ItemId } from './item.js';
 
 class Stack {
-    constructor(item, quantity) {
+    item: Item;
+    quantity: number;
+
+    constructor(item: Item, quantity: number) {
         check('item', item, 'quantity', quantity);
         this.item = item;
         this.quantity = quantity;
@@ -9,7 +13,9 @@ class Stack {
     clone() {
         return new Stack(this.item, this.quantity);
     }
-    add(other) {
+
+    // TODO: insane type
+    add(other: Stack | undefined | null): Stack {
         if (other) {
             if (other.item !== this.item)
                 throw new Error(
@@ -23,16 +29,16 @@ class Stack {
             return this.clone();
         }
     }
-    sub(other) {
+    sub(other: Stack) {
         return this.add(other.mul(-1));
     }
-    div(scalar) {
+    div(scalar: number) {
         return new Stack(this.item, this.quantity / scalar);
     }
-    mul(scalar) {
+    mul(scalar: number) {
         return new Stack(this.item, this.quantity * scalar);
     }
-    pow(scalar) {
+    pow(scalar: number) {
         return new Stack(this.item, this.quantity ** scalar);
     }
     toString() {
@@ -47,23 +53,25 @@ class Stack {
 }
 
 class StackSet {
+    stacks: Record<ItemId, Stack[]>;
+
     constructor() {
         this.stacks = {};
     }
-    add(stack) {
+    add(stack: Stack) {
         this._ensure_stack(stack);
         this.stacks[stack.item.id].push(stack);
     }
-    sub(stack) {
+    sub(stack: Stack) {
         this._ensure_stack(stack);
         this.stacks[stack.item.id].push(stack.mul(-1));
     }
-    _ensure_stack(stack) {
+    _ensure_stack(stack: Stack) {
         if (!this.stacks[stack.item.id]) {
             this.stacks[stack.item.id] = [];
         }
     }
-    total(item) {
+    total(item: Item) {
         if (this.stacks[item.id]) {
             return this.stacks[item.id].reduce(
                 (p, c) => p.add(c),
@@ -90,7 +98,7 @@ class StackSet {
         // Find the item type that has the largest -ive total. Return that stack.
         return this._min_max_total(ignoring, (a, b) => a.quantity < b.quantity);
     }
-    _min_max_total(ignoring, fn) {
+    _min_max_total(ignoring: ItemId[], fn: (a: Stack, b: Stack) => boolean) {
         return (
             Object.keys(this.stacks)
                 // .map(e => {console.log(e); return e;})
@@ -112,7 +120,7 @@ class StackSet {
     // type A has +3 & -4.
     // type B has +50 & -60.
     // Type A has the larger effective difference.
-    margins(ignoring = []) {
+    margins(ignoring: any[] = []) {
         return Object.keys(this.stacks)
             .filter((i) => !ignoring.includes(i))
             .map((id) => this.stacks[id][0].item)
@@ -130,7 +138,7 @@ class StackSet {
     }
 
     // See 'margins'; except the values are squared to get the magnitudes.
-    margins_squared(ignoring = []) {
+    margins_squared(ignoring: any[] = []) {
         return Object.keys(this.stacks)
             .filter((i) => !ignoring.includes(i))
             .map((id) => this.stacks[id][0].item)
@@ -148,7 +156,7 @@ class StackSet {
             }, new StackSet());
     }
 
-    total_positive(item) {
+    total_positive(item: Item) {
         if (this.stacks[item.id]) {
             return this.stacks[item.id]
                 .filter((s) => s.quantity > 0)
@@ -157,7 +165,7 @@ class StackSet {
             return new Stack(item, 0);
         }
     }
-    total_negative(item) {
+    total_negative(item: Item) {
         if (this.stacks[item.id]) {
             return this.stacks[item.id]
                 .filter((s) => s.quantity < 0)

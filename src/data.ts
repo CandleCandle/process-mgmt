@@ -1,7 +1,17 @@
 import { check } from './structures_base.js';
+import { Item, ItemId } from './item.js';
+import { Factory, FactoryGroup } from './factory.js';
+import { Process } from './process.js';
 
 class Data {
-    constructor(game, version) {
+    game: string;
+    version: string;
+    items: Record<ItemId, Item>;
+    factory_groups: Record<string, FactoryGroup>;
+    factories: Record<string, Factory>;
+    processes: Record<string, Process>;
+
+    constructor(game: string, version: string) {
         check('game', game, 'version', version);
         this.game = game;
         this.version = version;

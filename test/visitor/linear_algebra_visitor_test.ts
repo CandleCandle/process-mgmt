@@ -24,7 +24,7 @@ const floatingPointDeepStrictEqual = function (
     actual,
     expected,
     compare,
-    message,
+    message?,
 ) {
     const type = typeof actual;
     if (Array.isArray(actual)) {
@@ -375,7 +375,7 @@ describe('Linear Algebra Visitor', function () {
                 )
                 .accept(new ProcessCountVisitor())
                 .accept(la);
-            assert.deepStrictEqual(la.initial_matrix.data, [
+            assert.deepStrictEqual(la.initial_matrix!.data, [
                 //     AO   HC   LC
                 [-20, 0, 0], // c
                 [11, 0, 10], // g
@@ -393,8 +393,9 @@ describe('Linear Algebra Visitor', function () {
                 false,
             );
 
-            let p = new ProcessChain(Object.values(data.processes));
-            p = new RateChain(p);
+            const p = new RateChain(
+                new ProcessChain(Object.values(data.processes)),
+            );
             p.process_counts = {
                 HC: 5,
                 LC: 17,
@@ -420,7 +421,7 @@ describe('Linear Algebra Visitor', function () {
                 )
                 .accept(new ProcessCountVisitor())
                 .accept(la);
-            assert.deepStrictEqual(la.augmented_matrix.data, [
+            assert.deepStrictEqual(la.augmented_matrix!.data, [
                 //     AD   HC   LC    C    W  REQ
                 [-20, 0, 0, 1, 0, 0], // c
                 [11, 0, 10, 0, 0, 390], // g
@@ -437,8 +438,9 @@ describe('Linear Algebra Visitor', function () {
                 false,
             );
 
-            let p = new ProcessChain(Object.values(data.processes));
-            p = new RateChain(p);
+            const p = new RateChain(
+                new ProcessChain(Object.values(data.processes)),
+            );
             p.process_counts = {
                 HC: 5,
                 LC: 17,
@@ -466,7 +468,7 @@ describe('Linear Algebra Visitor', function () {
                 .accept(new ProcessCountVisitor())
                 .accept(la);
             floatingPointDeepStrictEqual(
-                la.augmented_matrix.data,
+                la.augmented_matrix!.data,
                 [
                     //     AO   HC   LC    C    W  REQ
                     [-20, 0, 0, 1, 0, 0], // c
@@ -486,8 +488,9 @@ describe('Linear Algebra Visitor', function () {
                 false,
             );
 
-            let p = new ProcessChain(Object.values(data.processes));
-            p = new RateChain(p);
+            const p = new RateChain(
+                new ProcessChain(Object.values(data.processes)),
+            );
             p.process_counts = {
                 HC: 5,
                 LC: 17,
@@ -510,7 +513,7 @@ describe('Linear Algebra Visitor', function () {
                 )
                 .accept(new ProcessCountVisitor())
                 .accept(la);
-            assert.deepStrictEqual(la.augmented_matrix.data, [
+            assert.deepStrictEqual(la.augmented_matrix!.data, [
                 //     AD   HC   LC    C    W    H   REQ
                 [-20, 0, 0, 1, 0, 0, 0], // c
                 [11, 0, 10, 0, 0, 0, 390], // g

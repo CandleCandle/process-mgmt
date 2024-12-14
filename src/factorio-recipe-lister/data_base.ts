@@ -13,7 +13,7 @@ const check_add = function (item, fn) {
     }
 };
 
-const add_item = function (data, name, i18n) {
+const add_item = function (data, name, i18n?) {
     if (!data.items[name]) {
         if (i18n) {
             data.add_item(new Item(name, i18n));
@@ -133,11 +133,11 @@ const _add_temperature_recipe = function (
     });
 };
 
-const compute_permutations = function (input, out) {
+const compute_permutations = function (input, out?) {
     if (input.length == 0) return out;
     const entry = input.shift();
     if (out) {
-        const r = [];
+        const r: any[] = [];
         for (const o of out) {
             for (const e of entry) {
                 r.push(o.concat(e));
@@ -174,7 +174,7 @@ const cross_product_ingredients = function (
     });
     const permutations = compute_permutations(
         ingredients_with_temperature_lists.map((ingredient_list) => {
-            const r = [];
+            const r: any[] = [];
             for (let i = 0; i < ingredient_list.length; ++i) r.push(i);
             return r;
         }),
@@ -187,7 +187,7 @@ const cross_product_ingredients = function (
 };
 
 const add_factory_groups = function (data, group) {
-    for (const factory of Object.values(group)) {
+    for (const factory of Object.values(group) as any[]) {
         check_add([factory, factory.crafting_categories], () => {
             for (const category_name of Object.keys(
                 factory.crafting_categories,
@@ -241,7 +241,7 @@ async function create_data(game, version, json_promise_cb) {
         // enumerate all possible temperatures for fluids.
         // create temperature based items for each.
 
-        for (const recipe of Object.values(recipe_raw)) {
+        for (const recipe of Object.values(recipe_raw) as any[]) {
             if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
             if (!Array.isArray(recipe.products)) recipe.products = [];
             for (const product of recipe.products) {
@@ -269,7 +269,7 @@ async function create_data(game, version, json_promise_cb) {
 
         // if a process has one of the temperature fluids as an input then create multiple variants
 
-        for (const recipe of Object.values(recipe_raw)) {
+        for (const recipe of Object.values(recipe_raw) as any[]) {
             check_add(recipe, () => {
                 if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
                 if (!Array.isArray(recipe.products)) recipe.products = [];

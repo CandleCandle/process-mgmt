@@ -10,14 +10,15 @@ import { RateCalculator } from './visit/rate_calculator.js';
 import { RateGraphRenderer } from './visit/rate_graph_renderer.js';
 import { RateVisitor } from './visit/rate_visitor.js';
 import { LinearAlgebra } from './visit/linear_algebra_visitor.js';
-import { CycleRemover } from './visit/cycle_remover.js';
-import { CycleExpander } from './visit/cycle_expander.js';
 import { ProcessCountVisitor } from './visit/process_count_visitor.js';
+
+import type Matrix from 'node-matrices';
+export type { Matrix };
 
 const array_disambiguate = function (data, config) {
     return function (requirement, options) {
         const arr = Object.entries(config.get_process_choices())
-            .map((e) => {
+            .map((e: [string, any]) => {
                 return [data.items[e[0]].id, data.processes[e[1]]];
             })
             .reduce((acc, cur) => {
@@ -72,17 +73,17 @@ const array_disambiguate = function (data, config) {
 
 const quickest_factory_for_factory_type = function (data, factory_type) {
     return Object.values(data.factories)
-        .filter((f) => {
+        .filter((f: any) => {
             const g = f.groups.filter((ft) => {
                 return ft.id == factory_type.id;
             });
             return g.length != 0; // When `g` is not empty, the factory can handle the process.
         })
-        .sort((a, b) => a.duration_modifier - b.duration_modifier)[0]; // after sorting, return the first in the list, which will be the quickest.
+        .sort((a: any, b: any) => a.duration_modifier - b.duration_modifier)[0]; // after sorting, return the first in the list, which will be the quickest.
 };
 
 const command_all = function (argv) {
-    import('./' + argv.data + '/data.js').then((module) => {
+    import('./' + argv.data + '/data.ts').then((module) => {
         const data = module.data;
         const p = new ProcessChain(Object.values(data.processes));
         console.log(p.to_graphviz());
@@ -180,7 +181,7 @@ const decorate_config = function (config) {
 const command_linear_algebra = function (argv) {
     fs.readFile(argv.config, 'utf8', (_err, str) => {
         const config = decorate_config(JSON.parse(str));
-        import('./' + config.data + '/data.js')
+        import('./' + config.data + '/data.ts')
             .catch((e) => console.log('failed to import', config.data, e))
             .then((module) => module.default)
             .then((data) => {
@@ -263,11 +264,11 @@ const process_to_pretty_string = function (p, data) {
         '\n' +
         '  made in:\n' +
         Object.values(data.factories)
-            .filter((f) =>
+            .filter((f: any) =>
                 f.groups.map((fg) => fg.name).includes(p.factory_group.name),
             )
             .map(
-                (f) =>
+                (f: any) =>
                     f.id +
                     ' (duration modifier: ' +
                     f.duration_modifier +
@@ -281,7 +282,7 @@ const process_to_pretty_string = function (p, data) {
 };
 
 const command_what_produces = function (argv) {
-    import('./' + argv.data + '/data.js').then((module) => {
+    import('./' + argv.data + '/data.ts').then((module) => {
         const data = module.data;
         const p = new ProcessChain(Object.values(data.processes));
         const options = p.processes_by_output[argv.produces];
@@ -292,7 +293,7 @@ const command_what_produces = function (argv) {
 };
 
 const command_what_uses = function (argv) {
-    import('./' + argv.data + '/data.js').then((module) => {
+    import('./' + argv.data + '/data.ts').then((module) => {
         const data = module.data;
         const p = new ProcessChain(Object.values(data.processes));
         const options = p.processes_by_input[argv.uses];

@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Managing factory processes",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "prepare": "tsc && rsync --relative --archive --include '*/' --include='*.json' --exclude='*' src/./ dist",
     "test": "mocha --recursive",
+    "lint": "tsc -p test/tsconfig.json && eslint 'src/**/*.?s' 'test/**/*.?s'",
     "format": "prettier --write 'src/**/*.?s' 'test/**/*.?s'",
-    "run": "node src/index.js"
+    "run": "tsx src/index.ts"
   },
   "author": "",
   "license": "GPL-2.0-only",

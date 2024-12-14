@@ -31,6 +31,7 @@ const convert_ingredient = function (ingredient, recipe) {
     }
     return check_add(
         recipe,
+        // @ts-expect-error
         () => new Stack(data.items[ingredient_name], amount),
     );
 };
@@ -91,7 +92,7 @@ const data_p = import('./exported-data.json', { assert: { type: 'json' } })
             );
         }
 
-        for (const machine of raw.craftingMachines) {
+        for (const machine of raw.craftingMachines as any[]) {
             if (!machine.name) continue; // ignore '{}'
             check_add(machine, function () {
                 for (const cat of Object.keys(machine.categories)) {
