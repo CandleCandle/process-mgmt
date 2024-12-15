@@ -40,27 +40,32 @@ const convert_ingredient = function (data, ingredient) {
     const amount = get_ingredient_amount(ingredient);
     if (ingredient.temperature) {
         return new Stack(
-            data.items[ingredient.name + '_' + ingredient.temperature],
+            data.items[_item_id_name_from_data(ingredient.name, ingredient.temperature).id],
             amount,
         );
     }
     return new Stack(data.items[ingredient.name], amount);
 };
 
-const _recipe_has_fluid_temperature = function (recipe) {
+const _recipe_has_fluid_temperature = function (recipe, temperature_based_items) {
+    // [base name][temperature] => Item
     const i = recipe.ingredients.some(
         (ingredient) =>
             false ||
             ingredient.minimum_temperature ||
             ingredient.maximum_temperature ||
-            ingredient.temperature,
+            ingredient.temperature ||
+            temperature_based_items[ingredient.name]
+            ,
     );
     const p = recipe.products.some(
         (ingredient) =>
             false ||
             ingredient.minimum_temperature ||
             ingredient.maximum_temperature ||
-            ingredient.temperature,
+            ingredient.temperature ||
+            temperature_based_items[ingredient.name]
+            ,
     );
     return i || p;
 };
@@ -113,6 +118,7 @@ const _add_temperature_recipe = function (
         check_add([recipe, product], () => add_item(data, product.name));
     }
 
+    console.log('recipe', recipe.name);
     const ingredient_variations = cross_product_ingredients(
         data,
         recipe.ingredients,
@@ -158,15 +164,20 @@ const cross_product_ingredients = function (
     temperature_based_items,
 ) {
     const ingredients_with_temperature_lists = ingredients.map((i) => {
-        if (i.minimum_temperature || i.maximum_temperature) {
+        console.log('ingredient', i.name, i.minimum_temperature, i.maximum_temperature, i.temperature, temperature_based_items[i.name]);
+        if (i.minimum_temperature || i.maximum_temperature || temperature_based_items[i.name]) {
             const stack_in_range = Object.keys(temperature_based_items[i.name])
                 .filter(
                     (t) =>
-                        i.minimum_temperature <= t &&
-                        t <= i.maximum_temperature,
+                        // temperature of this item is within the range of the ingredient restrictions
+                        (i.minimum_temperature <= t && t <= i.maximum_temperature)
+                        // no temperature restrictions specified for the ingredient
+                        || (!i.minimum_temperature && !i.maximum_temperature && !i.temperature)
+                    ,
                 )
                 .map((t) => temperature_based_items[i.name][t])
                 .map((item) => new Stack(item, get_ingredient_amount(i)));
+            console.log('  ', stack_in_range);
             return stack_in_range;
         } else {
             return [convert_ingredient(data, i)];
@@ -223,94 +234,99 @@ const _add_temperature_based_item = function (
     temperature_based_items[product.name][product.temperature] = item;
 };
 
-// const _import_file = function(name) {
-//     return import('./recipe-lister/' + name, {assert: { type: 'json'}})
-//         .catch(e => {
-//         console.log('failed to read recipe.json:', e);
-//     })
-//     .then(m => m.default)
-// };
+function _item_id_name_from_data(name, temp) {
+    let t;
+    if (temp < 0) {
+        t = '_' + Math.abs(temp);
+    } else {
+        t = temp;
+    }
+    return {
+        id: name + '_' + t,
+        name: name + ' (' + temp + ')',
+    }
+}
+
+function _add_temperature_items(data, recipe_raw) {
+    const temperature_based_items = {}; // [base name][temperature] => Item
+    for (const recipe of Object.values(recipe_raw)) {
+        if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
+        if (!Array.isArray(recipe.products)) recipe.products = [];
+        for (const product of recipe.products) {
+            if (product.temperature) {
+                const item = check_add([recipe, product], () =>
+                    add_item(
+                        data,
+                        _item_id_name_from_data(product.name, product.temperature).id,
+                        _item_id_name_from_data(product.name, product.temperature).name,
+                    ),
+                );
+                _add_temperature_based_item(
+                    temperature_based_items,
+                    product,
+                    item,
+                );
+            } else {
+                check_add([recipe, product], () =>
+                    add_item(data, product.name),
+                );
+            }
+        }
+        for (const i of recipe.ingredients) {
+            if (i.temperature) {
+                i.minimum_temperature = i.temperature;
+                i.maximum_temperature = i.temperature;
+            }
+            if (i.minimum_temperature > -1e207) {
+                const temp = i.minimum_temperature;
+                const item = check_add([recipe, i], () =>
+                    add_item(
+                        data,
+                        _item_id_name_from_data(i.name, temp).id,
+                        _item_id_name_from_data(i.name, temp).name,
+                    ),
+                );
+                _add_temperature_based_item(
+                    temperature_based_items,
+                    i,
+                    item,
+                );
+            }
+            if (i.maximum_temperature < 1e207) {
+                const temp = i.maximum_temperature;
+                const item = check_add([recipe, i], () =>
+                    add_item(
+                        data,
+                        _item_id_name_from_data(i.name, temp).id,
+                        _item_id_name_from_data(i.name, temp).name,
+                    ),
+                );
+                _add_temperature_based_item(
+                    temperature_based_items,
+                    i,
+                    item,
+                );
+            }
+        }
+    }
+    return temperature_based_items;
+}
 
 async function create_data(game, version, json_promise_cb) {
-    // if (!!!json_promise_cb) json_promise_cb = _import_file;
     const data_p = json_promise_cb('recipe.json').then((recipe_raw) => {
         const data = new Data(game, version);
 
-        const temperature_based_items = {}; // [base name][temperature] => Item
 
         // enumerate all possible temperatures for fluids.
         // create temperature based items for each.
 
-        for (const recipe of Object.values(recipe_raw)) {
-            if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
-            if (!Array.isArray(recipe.products)) recipe.products = [];
-            for (const product of recipe.products) {
-                if (product.temperature) {
-                    const temp = product.temperature;
-                    const item = check_add([recipe, product], () =>
-                        add_item(
-                            data,
-                            product.name + '_' + temp,
-                            product.name + ' (' + temp + ')',
-                        ),
-                    );
-                    _add_temperature_based_item(
-                        temperature_based_items,
-                        product,
-                        item,
-                    );
-                } else {
-                    check_add([recipe, product], () =>
-                        add_item(data, product.name),
-                    );
-                }
-            }
-        }
+        // [base name][temperature] => Item
+        const temperature_based_items = _add_temperature_items(data, recipe_raw); 
 
         // if a process has one of the temperature fluids as an input then create multiple variants
-
         for (const recipe of Object.values(recipe_raw)) {
             check_add(recipe, () => {
-                if (!Array.isArray(recipe.ingredients)) recipe.ingredients = [];
-                if (!Array.isArray(recipe.products)) recipe.products = [];
-                for (const i of recipe.ingredients) {
-                    if (i.temperature) {
-                        i.minimum_temperature = i.temperature;
-                        i.maximum_temperature = i.temperature;
-                    }
-                    if (i.minimum_temperature > -1e207) {
-                        const temp = i.minimum_temperature;
-                        const item = check_add([recipe, i], () =>
-                            add_item(
-                                data,
-                                i.name + '_' + temp,
-                                i.name + ' (' + temp + ')',
-                            ),
-                        );
-                        _add_temperature_based_item(
-                            temperature_based_items,
-                            i,
-                            item,
-                        );
-                    }
-                    if (i.maximum_temperature < 1e207) {
-                        const temp = i.maximum_temperature;
-                        const item = check_add([recipe, i], () =>
-                            add_item(
-                                data,
-                                i.name + '_' + temp,
-                                i.name + ' (' + temp + ')',
-                            ),
-                        );
-                        _add_temperature_based_item(
-                            temperature_based_items,
-                            i,
-                            item,
-                        );
-                    }
-                }
-
-                if (_recipe_has_fluid_temperature(recipe)) {
+                if (_recipe_has_fluid_temperature(recipe, temperature_based_items)) {
                     _add_temperature_recipe(
                         data,
                         recipe,

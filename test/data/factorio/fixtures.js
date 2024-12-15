@@ -274,9 +274,49 @@ const single_mixed_recipe = {
     },
 };
 
+const mixed_temperature_restrictions = {
+    'fluoroketone': {
+        name: 'fluoroketone',
+        'localised_name': [
+            'recipe-name.fluoroketone'
+        ],
+        category: 'cryogenics',
+        energy: 10,
+        ingredients: [
+            { type: 'fluid', name: 'fluorine', amount: 50 },
+            { type: 'fluid', name: 'ammonia', amount: 50 }
+        ],
+        products: [
+            {
+                type: 'fluid', name: 'fluoroketone-hot',
+                probability: 1, amount: 50, temperature: 180
+            }
+        ]
+    },
+    'fluoroketone-cooling': {
+        name: 'fluoroketone-cooling',
+        localised_name: [
+            'recipe-name.fluoroketone-cooling'
+        ],
+        category: 'cryogenics',
+        energy: 5,
+        ingredients: [
+            { type: 'fluid', name: 'fluoroketone-hot', amount: 10, ignored_by_stats: 10 }
+        ],
+        products: [
+            {
+                type: 'fluid', name: 'fluoroketone-cold', probability: 1, amount: 10,
+                temperature: -150, ignored_by_stats: 10
+            }
+        ]
+    },
+}
+
+
 export {
     single_mixed_recipe,
     multiple_temperature_recipe,
     single_temperature_recipe,
     single_solids_recipe,
+    mixed_temperature_restrictions,
 };
