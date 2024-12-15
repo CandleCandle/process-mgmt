@@ -75,7 +75,8 @@ class RateGraphRenderer extends ProcessChainVisitor {
                     '<i' +
                     index +
                     '> ' +
-                    fix_identifier(input.item.name) +
+                    input.item.name +
+                    //fix_identifier(input.item.name) +
                     ' (' +
                     Math.round(input.quantity * process_count * 100) / 100 +
                     ')'
