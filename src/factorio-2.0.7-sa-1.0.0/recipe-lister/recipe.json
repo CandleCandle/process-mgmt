@@ -12451,6 +12451,7 @@
         "name" : "fluoroketone-hot",
         "probability" : 1,
         "amount" : 3,
+        "temperature" : 180,
         "ignored_by_stats" : 3,
         "ignored_by_productivity" : 3
       }
